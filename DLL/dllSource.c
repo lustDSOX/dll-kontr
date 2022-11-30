@@ -28,6 +28,7 @@ BOOL WINAPI DllMain(
 }
 
 int CountSimple(int n1, int n2) {
+	startT = clock();
 	count = 0;
 	int s = 0;
 	int e = 0;
@@ -42,11 +43,11 @@ int CountSimple(int n1, int n2) {
 	if (s == 1) s++;
 	if (s <= 0 && e <= 0) return 0;
 	if (s <= 0) s = 2;
-	while (s != e) 
-	{
+	while (s != e) {
 		IsSimple(s);
 		s++;
 	}
+	startT = clock() - startT;
 	return count;
 }
 
@@ -67,10 +68,11 @@ int CountSimpleThreads(int n1, int n2, int cThread) {
 	if (s <= 0 && e <= 0) return 0;
 	if (s <= 0) s = 2;
 
+	if (cThread > e-s) cThread = e-s;
 	HANDLE* threads = calloc(cThread-1, sizeof(HANDLE));
 	for (size_t i = 0; i < cThread-1; i++)
 	{
-		threads[i] = CreateThread(NULL, NULL, IsSimple, s, NULL, NULL);
+		threads[i] = CreateThread(NULL, NULL, IsSimple,s, NULL, NULL);
 		if (s < e) s++;
 		else break;
 	}
@@ -78,7 +80,7 @@ int CountSimpleThreads(int n1, int n2, int cThread) {
 		IsSimple(s);
 		s++;
 	}
-	WaitForMultipleObjects(cThread - 1, threads, NULL, INFINITE);
+	WaitForMultipleObjects(cThread - 1, threads, TRUE, INFINITE);
 	start = clock() - start;
 	return count;
 }

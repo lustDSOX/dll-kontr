@@ -5,9 +5,12 @@
 #include <time.h>
 
 int count = 0;
-clock_t start;
 
 extern __declspec(dllimport) int CountSimple(int, int);
 extern __declspec(dllimport) int CountSimpleThreads(int, int,int);
-extern __declspec(dllimport) clock_t start;
+
+__declspec(dllimport) clock_t start;
+clock_t start;
+__declspec(dllimport) clock_t startT;
+clock_t startT;
 void IsSimple(int);
