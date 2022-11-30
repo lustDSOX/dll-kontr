@@ -5,3 +5,5 @@
 
 
 typedef int(_cdecl* CountSimple)(int, int);
+typedef int(_cdecl* CountSimpleThreads)(int, int,int);
+typedef clock_t(_cdecl* start);
